@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+	<title>天気御籤</title>
+	<style>
+		body {
+			text-align: center;
+		}
+
+		.bg {
+			padding: 30px 0;
+		}
+
+		.none {
+			display: none;
+		}
+
+		.block {
+			display: block;
+		}
+
+		.inner {
+			width: 30%;
+			margin: 0 auto;
+		}
+
+		@media screen and (max-width: 800px) {
+			.inner {
+				width: 100%;
+			}
+		}
+
+		.flex {
+			display: flex;
+			flex-direction: column;
+		}
+
+		table {
+			margin: auto;
+		}
+
+		.omikuji__image {
+			width: auto;
+			height: 200px;
+			margin: 0 auto;
+		}
+
+		ul {
+			padding: 0;
+			text-align: left;
+		}
+
+		li {
+			list-style: none;
+		}
+
+		.omikuji {
+			margin: 20px auto;
+			padding: 10px;
+			border-radius: 4px;
+			background-color: #b9c42f;
+		}
+
+		.today {
+			margin: 10px 0;
+		}
+
+		table,
+		th,
+		td {
+			border: 1px solid #000;
+			border-collapse: collapse;
+			padding: 5px;
+		}
+
+		.rainy table,
+		.rainy th,
+		.rainy td {
+			border: 1px solid #fff;
+		}
+
+		.sunny {
+			background-color: #a0d8ef;
+		}
+
+		.cloudy {
+			background-color: #999999;
+		}
+
+		.rainy {
+			background-color: #515151;
+			color: #fff;
+		}
+
+		.snowy {
+			background-color: #FFFAFA;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="bg">
+		<div class="inner">
+			<h1>本日のおみくじ</h1>
+			<div class="flex">
+				<img class="omikuji__image" src="images/omikuji.png" alt="">
+				<button class="omikuji">おみくじを引く！</button>
+			</div>
+			<div class="prob">
+				<table>
+					<thead>
+						<tr>
+							<th>出目</th>
+							<th>本日の確率</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>大吉</td>
+							<td class="daikichi"></td>
+						</tr>
+						<tr>
+							<td>中吉</td>
+							<td class="chuukichi"></td>
+						</tr>
+						<tr>
+							<td>吉</td>
+							<td class="kichi"></td>
+						</tr>
+						<tr>
+							<td>小吉</td>
+							<td class="syoukichi"></td>
+						</tr>
+						<tr>
+							<td>末吉</td>
+							<td class="suekichi"></td>
+						</tr>
+						<tr>
+							<td>凶</td>
+							<td class="kyou"></td>
+						</tr>
+						<tr>
+							<td>大凶</td>
+							<td class="daikyou"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="none">
+				<div class="today">
+					<h2>本日の天気</h2>
+				</div>
+				<div class="precipitation">
+					<table></table>
+				</div>
+				<div class="target"></div>
+				<div class="seventh">
+					<h2>1週間の天気予報</h2>
+					<table>
+						<tr>
+							<th>日付</th>
+							<th>天気</th>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="weather-code.js"></script>
+	<script>
+		//東海4県のコード番号をオブジェクトの配列にしておきます。
+		const codeNums = [{ 愛知県: 23 }, { 岐阜県: 21 }, { 三重県: 24 }, { 静岡県: 22 }];
+		//テンプレートリテラルでconst urlに代入します。
+		const url = `https://www.jma.go.jp/bosai/forecast/data/overview_forecast/${codeNums[0]['愛知県']}0000.json`;
+
+		fetch(url)
+			.then(function (response) {
+				return response.json();
+			})
+			.then(function (weather) {
+				console.log(weather);
+				const result = document.querySelector('.target');
+				const elmUl = document.createElement('ul');
+				for (const key in weather) {
+					const list = document.createElement('li');
+					elmUl.appendChild(list).innerHTML = key + '：' + weather[key];
+					result.appendChild(elmUl);
+				}
+			});
+
+		const weekUrl = `https://www.jma.go.jp/bosai/forecast/data/forecast/${codeNums[0]['愛知県']}0000.json`;
+
+		fetch(weekUrl)
+			.then(function (response) {
+				return response.json();
+			})
+			.then(function (data) {
+				const result = document.querySelector('.today');
+				const code = data[0].timeSeries[0].areas[0].weatherCodes;
+				// const code = [300, 0, 0];
+				console.log(weathercode[code[0]][0]);
+				const image = document.createElement('img');
+				const text = document.createElement('p');
+				const weathericon = weathercode[code[0]][0];
+				text.innerText = weathercode[code[0]][3];
+				image.src = `https://www.jma.go.jp/bosai/forecast/img/${weathericon}`;
+				result.appendChild(image);
+				result.appendChild(text);
+				const weekly = data[1].timeSeries[0].areas[0].weatherCodes;
+				const weeklyDate = data[1].timeSeries[0].timeDefines;
+				const dayarray = ['日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'];
+				const seventhArea = document.querySelector('.seventh');
+				const elmTable = document.querySelector('.seventh table');
+				const aichiTitle = document.createElement('h1');
+				seventhArea.insertBefore(aichiTitle, elmTable);
+				let num = 0;
+				const button = document.querySelector("button");
+				const omikuji = document.querySelector(".omikuji__image");
+				let prob;
+				let daikichi = document.querySelector(".daikichi");
+				let chuukichi = document.querySelector(".chuukichi");
+				let kichi = document.querySelector(".kichi");
+				let syoukichi = document.querySelector(".syoukichi");
+				let suekichi = document.querySelector(".suekichi");
+				let kyou = document.querySelector(".kyou");
+				let daikyou = document.querySelector(".daikyou");
+				let bg = document.querySelector(".bg");
+				const none = document.querySelector(".none");
+				if (code[0] < 200) {
+					prob = [5, 15, 30, 55, 80, 95];
+					daikichi.innerText = "5%";
+					chuukichi.innerText = "15%";
+					kichi.innerText = "25%";
+					syoukichi.innerText = "25%";
+					suekichi.innerText = "15%";
+					kyou.innerText = "10%"
+					daikyou.innerText = "5%"
+					bg.className = "bg sunny";
+				} else if (code[0] < 300) {
+					prob = [10, 20, 30, 60, 85, 95];
+					daikichi.innerText = "5%";
+					chuukichi.innerText = "10%";
+					kichi.innerText = "25%";
+					syoukichi.innerText = "30%";
+					suekichi.innerText = "10%";
+					kyou.innerText = "10%"
+					daikyou.innerText = "10%"
+					bg.className = "bg cloudy";
+				} else if (code[0] < 400) {
+					prob = [15, 35, 60, 70, 90, 98];
+					daikichi.innerText = "2%";
+					chuukichi.innerText = "8%";
+					kichi.innerText = "20%";
+					syoukichi.innerText = "10%";
+					suekichi.innerText = "25%";
+					kyou.innerText = "20%"
+					daikyou.innerText = "15%"
+					bg.className = "bg rainy";
+				} else {
+					prob = [10, 20, 30, 50, 80, 90];
+					daikichi.innerText = "10%";
+					chuukichi.innerText = "10%";
+					kichi.innerText = "30%";
+					syoukichi.innerText = "20%";
+					suekichi.innerText = "10%";
+					kyou.innerText = "10%"
+					daikyou.innerText = "10%"
+					bg.className = "bg snowy";
+				}
+				button.addEventListener("click", () => {
+					none.className = "block";
+					button.innerText = "もう一度引く！"
+					omikuji.src = "";
+					num = Math.round(Math.random() * 100);
+
+					if (num < prob[0]) {
+						omikuji.src = "images/omikuji_daikyou.png";
+					} else if (num < prob[1]) {
+						omikuji.src = "images/omikuji_kyou.png";
+					} else if (num < prob[2]) {
+						omikuji.src = "images/omikuji_suekichi.png";
+					} else if (num < prob[3]) {
+						omikuji.src = "images/omikuji_syoukichi.png";
+					} else if (num < prob[4]) {
+						omikuji.src = "images/omikuji_kichi.png";
+					} else if (num < prob[5]) {
+						omikuji.src = "images/omikuji_chuukichi.png";
+					} else {
+						omikuji.src = "images/omikuji_daikichi.png";
+					}
+				})
+
+				for (let i = 0; i < weekly.length; i++) {
+					console.log(weekly[i], weeklyDate[i]);
+					const elmTr = document.createElement('tr');
+					const elmTdDate = document.createElement('td');
+					const elmTdWeather = document.createElement('td');
+					elmTdDate.innerHTML = `${new Date(weeklyDate[i]).getDate()}日（${dayarray[new Date(weeklyDate[i]).getDay()]}）`;
+					elmTdWeather.innerHTML = weathercode[weekly[i]][3];
+					elmTr.appendChild(elmTdDate);
+					elmTr.appendChild(elmTdWeather);
+					elmTable.appendChild(elmTr);
+				}
+				//東部を挿入します。
+				const precipAria = document.querySelector('.precipitation');
+				const head1 = document.createElement('h2');
+				head1.innerHTML = `${data[0].timeSeries[1].areas[1].area.name}降水率`;
+				//tableに行を2行挿入します。
+				const precipTable = document.querySelector('.precipitation table');
+				const elmTr1 = document.createElement('tr');
+				const elmTr2 = document.createElement('tr');
+				precipAria.insertBefore(head1, precipTable);
+				//jsonから時間を取得する
+				const timeStamp = data[0].timeSeries[1].timeDefines;
+				//for..of文でループします。
+				for (const time of timeStamp) {
+					const data = new Date(time);
+					const elmTh = document.createElement('th');
+					//時間を分を2桁にする方法
+					elmTh.innerHTML = `${data.getHours()}時${data.getMinutes().toString().padStart(2, '0')}分`;
+					elmTr1.appendChild(elmTh);
+					precipTable.appendChild(elmTr1);
+				}
+				//降水率をjsonから取得し、挿入する。
+				const pops = data[0].timeSeries[1].areas[1].pops;
+				console.log(pops);
+				for (const percent of pops) {
+					const elmTh = document.createElement('th');
+					elmTh.innerHTML = `${percent}%`;
+					elmTr2.appendChild(elmTh);
+					precipTable.appendChild(elmTr2);
+				}
+			});
+
+
+	</script>
+</body>
+
+</html>
