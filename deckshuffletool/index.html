@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deck Shuffle Tool</title>
+    <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <main class="main">
+        <h1 class="main__title">Deck Shuffle Tool</h1>
+        <div class="main__form">
+            <label for="">デッキ枚数を指定<br>
+                <input class="main__deck" type="number" min="40" max="60">
+            </label>
+            <label for="">シャッフル方法を指定
+                <select class="main__method" name="num">
+                    <option value="default"></option>
+                    <option value="farrow">ファローシャッフル</option>
+                    <option value="hindu">ヒンズーシャッフル</option>
+                    <option value="deal5">ディールシャッフル(5切り)</option>
+                    <option value="deal8">ディールシャッフル(8切り)</option>
+                    <option value="riffle">ショットガンシャッフル(リフルシャッフル)</option>
+                </select>
+            </label>
+            <label for="">シャッフル回数を指定<br>
+                <input class="main__time" type="number" min="1">
+            </label>
+            <button class="main__button">Shuffle!</button>
+        </div>
+        <div class="result">
+            <p class="result__caution"></p>
+            <p class="result__text none">シャッフル前</p>
+            <div class="result__before"></div>
+            <p class="result__arrow none">↓</p>
+            <p class="result__text none">シャッフル後</p>
+            <div class="result__after"></div>
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+
+</html>

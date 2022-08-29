@@ -1,0 +1,85 @@
+body {
+  background-color: #a9ceec;
+  color: #fff;
+}
+
+label {
+  margin-bottom: 20px;
+}
+
+input {
+  background-color: #fff;
+  width: 50%;
+}
+
+select {
+  background-color: #fff;
+  padding: 5px;
+}
+
+.none {
+  display: none;
+}
+
+.main {
+  width: 30%;
+  margin: 0 auto;
+}
+@media screen and (max-width: 1000px) {
+  .main {
+    width: 100%;
+    margin: 10px;
+  }
+}
+.main__title {
+  margin: 40px 0 40px;
+  font-size: 1.5rem;
+}
+.main__form {
+  display: flex;
+  flex-direction: column;
+}
+.main__button {
+  color: #fff;
+  background-color: #216d68;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 5px 10px;
+  border-radius: 18px;
+}
+
+.result__caution {
+  color: #f00;
+  font-size: 2rem;
+}
+.result__before {
+  display: flex;
+  justify-content: left;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.result__after {
+  display: flex;
+  justify-content: left;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.result__card {
+  width: 10%;
+  aspect-ratio: 59/86;
+  margin: 1.25%;
+  padding: 2%;
+  background-color: #BB9C71;
+  text-align: center;
+}
+.result__text {
+  font-size: 2rem;
+  margin: 10px;
+}
+.result__arrow {
+  font-size: 3rem;
+  text-align: center;
+  margin: 20px;
+}
+/*# sourceMappingURL=style.css.map */
