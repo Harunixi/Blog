@@ -1,6 +1,6 @@
 ## URL
 
-[Yu-Gi-Oh!Life]https://harunixi.secret.jp/blog/
+[Yu-Gi-Oh!Life](https://harunixi.xyz/blog)
 
 ## Features
 
