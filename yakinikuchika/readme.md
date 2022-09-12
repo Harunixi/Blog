@@ -1,6 +1,6 @@
 ## URL
 
-![焼肉千佳](https://harunixi.xyz/yakinikuchika)
+[焼肉千佳](https://harunixi.xyz/yakinikuchika)
 
 ## Features
 
