@@ -1,6 +1,6 @@
 ## 完成品
 
-[Yu-Gi-Oh!Life]https://harunixi.secret.jp/blog/
+[Yu-Gi-Oh!Life](https://harunixi.secret.jp/blog/)
 
 ## Features
 
