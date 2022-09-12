@@ -1,12 +1,12 @@
 ## URL
 
-![天気御籤](https://harunixi.secret.jp/weathersnippet/)
+![天気御籤](https://harunixi.xyz/weathersnippet)
 
 ## Features
 
 御神籤を引けるサイト、気象庁APIを利用し、天候によって御神籤の出る運勢の確率が変わる、というものです。背景は、天候によって変わります。
 
-- サイト名:Deck Shuffle Tool
+- サイト名:天気御籤
 
 ## Requirement
 
