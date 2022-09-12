@@ -1,6 +1,6 @@
 ## URL
 
-![Deck Shuffle Tool](https://harunixi.xyz/deckshuffletool/)
+[Deck Shuffle Tool](https://harunixi.xyz/deckshuffletool/)
 
 ## Features
 
