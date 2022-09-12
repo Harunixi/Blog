@@ -1,6 +1,6 @@
 ## URL
 
-![天気御籤](https://harunixi.xyz/weathersnippet)
+[天気御籤](https://harunixi.xyz/weathersnippet)
 
 ## Features
 
